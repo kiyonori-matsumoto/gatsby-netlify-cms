@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "gatsby";
+import { Column, Card } from "rbx";
 
 export interface Post {
   id: string;
@@ -21,38 +22,44 @@ interface Props {
 
 const PostItem: React.FC<Props> = ({ post }) => {
   return (
-    <div className="card" key={post.id}>
-      {/* <div className="card-image">
+    <Column size={12}>
+      <Card key={post.id}>
+        {/* <div className="card-image">
         <img src="{{ post.image }}" alt="{{ post.title }}">
     </div> */}
-      <header className="card-header">
-        <Link className="card-header-title" to={post.fields.slug}>
-          {post.frontmatter.title}
-        </Link>
-      </header>
-      {/* {% endif %} */}
-      <div className="card-content">
-        <div className="content">
-          {/* {% if post.image %}
+        <Card.Header>
+          <Card.Header.Title
+            as={Link}
+            className="card-header-title"
+            to={post.fields.slug}
+          >
+            {post.frontmatter.title}
+          </Card.Header.Title>
+        </Card.Header>
+        {/* {% endif %} */}
+        <Card.Content>
+          <div className="content">
+            {/* {% if post.image %}
             <a className="title is-4" href="{{ site.baseurl }}{{ post.url }}">{{ post.title}}</a>
             {% endif %} */}
-          <p>{post.frontmatter.description}</p>
-        </div>
-        <div className="has-text-centered">
-          <Link to={post.fields.slug} className="button is-primary">
-            Read more
-          </Link>
-        </div>
-      </div>
-      <footer className="card-footer">
-        <p className="card-footer-item">Published: </p>
-      </footer>
-    </div>
+            <p>{post.frontmatter.description}</p>
+          </div>
+          <div className="has-text-centered">
+            <Link to={post.fields.slug} className="button is-primary">
+              Read more
+            </Link>
+          </div>
+        </Card.Content>
+        <Card.Footer>
+          <Card.Footer.Item>Published: </Card.Footer.Item>
+        </Card.Footer>
+      </Card>
+    </Column>
   );
 };
 
 export default PostItem;
 
 export const PostList: React.FC = ({ children }) => (
-  <div className="column is-12">{children}</div>
+  <Column.Group multiline>{children}</Column.Group>
 );

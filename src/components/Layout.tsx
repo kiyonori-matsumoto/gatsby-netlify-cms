@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 import "./all.scss";
-import { Hero, Container, Title } from "rbx";
+import { Hero, Container, Title, Section } from "rbx";
 
 const TemplateWrapper: React.FC<{ title: string; subtitle?: string }> = ({
   title,
@@ -21,7 +21,9 @@ const TemplateWrapper: React.FC<{ title: string; subtitle?: string }> = ({
         </Container>
       </Hero.Body>
     </Hero>
-    <div>{children}</div>
+    <Section>
+      <Container>{children}</Container>
+    </Section>
     <Footer />
   </>
 );

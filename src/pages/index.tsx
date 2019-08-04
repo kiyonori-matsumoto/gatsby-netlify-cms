@@ -30,13 +30,11 @@ export default class IndexPage extends React.Component<Props> {
           description="blog"
           url="https://blog.matsukiyo.me/"
         />
-        <Section>
-          <PostList>
-            {posts.map(({ node: post }) => (
-              <PostItem key={post.id} post={post} />
-            ))}
-          </PostList>
-        </Section>
+        <PostList>
+          {posts.map(({ node: post }) => (
+            <PostItem key={post.id} post={post} />
+          ))}
+        </PostList>
       </Layout>
     );
   }

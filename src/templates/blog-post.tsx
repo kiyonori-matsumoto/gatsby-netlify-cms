@@ -9,6 +9,7 @@ import { Section, Container, Tag } from "rbx";
 import { kebabCase } from "lodash";
 
 interface Props {
+  date?: string;
   content: any;
   contentComponent: any;
   description: string;
@@ -21,6 +22,7 @@ export const BlogPostTemplate: React.FC<Props> = ({
   contentComponent,
   description,
   tags,
+  date,
   title
 }) => {
   const PostContent = contentComponent || Content;
@@ -28,7 +30,7 @@ export const BlogPostTemplate: React.FC<Props> = ({
     <Section>
       <Container>
         <div className="content">
-          {/* <p>Published: {{ page.date | date: "%b %-d, %Y" }} by {{ page.author }}</p> */}
+          <p>Published: {date} by Me</p>
 
           <PostContent content={content} />
         </div>
@@ -75,6 +77,7 @@ const BlogPost: React.SFC<{
         url={url}
       />
       <BlogPostTemplate
+        date={post.frontmatter.date}
         content={post.html}
         contentComponent={HTMLContent}
         description={post.frontmatter.description}
@@ -89,7 +92,7 @@ const BlogPost: React.SFC<{
               to={adjacentArticle.fields.slug}
             >
               <AdjacentArticleLabel>
-                {i === 0 ? "이전 글" : "다음 글"}
+                {i === 0 ? "前へ" : "次へ"}
               </AdjacentArticleLabel>
               <AdjacentArticleTitle>
                 {adjacentArticle.frontmatter.title}

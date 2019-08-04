@@ -16,14 +16,14 @@ class TagRoute extends React.Component<any> {
     return (
       <Layout>
         <PageHelmet
-          title={`“${tag}” 태그 검색 결과`}
-          description={`ahnheejong.name에서 “${tag}” 태그로 검색한 결과입니다.`}
-          url={`https://ahnheejong.name/tags/${tag}`}
+          title={`“${tag}” 検索結果`}
+          description={`${tag} 検索結果`}
+          url={`https://blog.matsukiyo.me/tags/${tag}`}
         />
         <section className="section">
           <Header>
             <TagName>{`“${tag}”`}</TagName>
-            {`태그가 달린 글 (총 ${totalCount}편)`}
+            タグがついた記事 (全 {totalCount}件)
           </Header>
           <PostList>
             {posts.map(({ node: post }: any) => (
