@@ -3,8 +3,6 @@ import { graphql } from "gatsby";
 import Layout from "../components/Layout";
 import PostItem, { Post, PostList } from "../components/Post";
 import PageHelmet from "../components/PageHelmet";
-import GatsbyLink from "gatsby-link";
-import { Content, Section } from "rbx";
 
 interface Props {
   data: {
@@ -20,8 +18,6 @@ export default class IndexPage extends React.Component<Props> {
   render() {
     const { data } = this.props;
     const { edges: posts } = data.allMarkdownRemark;
-
-    const now = new Date();
 
     return (
       <Layout title="Blogs">
@@ -60,6 +56,11 @@ export const pageQuery = graphql`
             tags
           }
         }
+      }
+      pageInfo {
+        perPage
+        pageCount
+        currentPage
       }
     }
   }

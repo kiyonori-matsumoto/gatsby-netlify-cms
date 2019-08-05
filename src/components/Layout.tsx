@@ -13,7 +13,7 @@ const TemplateWrapper: React.FC<{ title: string; subtitle?: string }> = ({
 }) => (
   <>
     <Navbar />
-    <Hero color="primary">
+    <Hero color="primary" gradient size="medium">
       <Hero.Body>
         <Container>
           <Title>{title}</Title>

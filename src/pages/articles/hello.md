@@ -8,3 +8,7 @@ tags:
 ---
 
 こんにちは
+
+```bash
+% echo "hello world"
+```

@@ -1,8 +1,6 @@
 {
   "name": "blog",
-  "description": "ahn.heejong's personal blog",
   "version": "1.0.0",
-  "author": "Ahn Heejong",
   "dependencies": {
     "@types/react": "^16.8.24",
     "babel-plugin-styled-components": "^1.10.6",

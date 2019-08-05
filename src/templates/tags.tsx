@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import PostItem, { PostList } from "../components/Post";
 import styled from "styled-components";
 import PageHelmet from "../components/PageHelmet";
+import { Heading } from "rbx";
 
 class TagRoute extends React.Component<any> {
   render() {
@@ -14,23 +15,21 @@ class TagRoute extends React.Component<any> {
     const totalCount = allMarkdownRemark.totalCount;
 
     return (
-      <Layout>
+      <Layout title={`"${tag}" 検索結果`}>
         <PageHelmet
           title={`“${tag}” 検索結果`}
           description={`${tag} 検索結果`}
           url={`https://blog.matsukiyo.me/tags/${tag}`}
         />
-        <section className="section">
-          <Header>
-            <TagName>{`“${tag}”`}</TagName>
-            タグがついた記事 (全 {totalCount}件)
-          </Header>
-          <PostList>
-            {posts.map(({ node: post }: any) => (
-              <PostItem key={post.id} post={post} />
-            ))}
-          </PostList>
-        </section>
+        <p>
+          <strong>{`“${tag}”`}</strong>
+          タグがついた記事 (全 {totalCount}件)
+        </p>
+        <PostList>
+          {posts.map(({ node: post }: any) => (
+            <PostItem key={post.id} post={post} />
+          ))}
+        </PostList>
       </Layout>
     );
   }
