@@ -22,28 +22,32 @@ module.exports = {
             }
           }
         `,
-        feeds: [
-          {
-            setup: locals => {
-              return {
-                ...locals,
-                ...locals.query.site.siteMetadata,
-                site_url: "https://blog.matsukiyo.me/",
-                feed_url: "https://blog.matsukiyo.me/feed.xml"
-              };
-            },
-            serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.edges.map(edge => {
-                const articleUrl = `${site.siteMetadata.siteUrl}${edge.node.fields.slug}`;
+        feeds: [{
+          setup: locals => {
+            return {
+              ...locals,
+              ...locals.query.site.siteMetadata,
+              site_url: "https://blog.matsukiyo.me/",
+              feed_url: "https://blog.matsukiyo.me/feed.xml"
+            };
+          },
+          serialize: ({
+            query: {
+              site,
+              allMarkdownRemark
+            }
+          }) => {
+            return allMarkdownRemark.edges.map(edge => {
+              const articleUrl = `${site.siteMetadata.siteUrl}${edge.node.fields.slug}`;
 
-                return {
-                  ...edge.node.frontmatter,
-                  url: articleUrl,
-                  guid: articleUrl
-                };
-              });
-            },
-            query: `
+              return {
+                ...edge.node.frontmatter,
+                url: articleUrl,
+                guid: articleUrl
+              };
+            });
+          },
+          query: `
               {
                 allMarkdownRemark(
                   sort: { order: DESC, fields: [frontmatter___date] },
@@ -62,9 +66,8 @@ module.exports = {
                 }
               }
             `,
-            output: "/feed.xml"
-          }
-        ]
+          output: "/feed.xml"
+        }]
       }
     },
     {
@@ -81,13 +84,12 @@ module.exports = {
     {
       resolve: "gatsby-transformer-remark",
       options: {
-        plugins: [
-          {
-            resolve: "gatsby-remark-prismjs"
-          }
-        ]
+        plugins: [{
+          resolve: "gatsby-remark-prismjs"
+        }]
       }
     },
+    `gatsby-plugin-mdx`,
     // {
     //   resolve: "gatsby-source-filesystem",
     //   options: {
