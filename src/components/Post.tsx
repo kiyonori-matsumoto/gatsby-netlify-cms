@@ -64,7 +64,7 @@ const PostItem: React.FC<Props> = ({ post }) => {
         </Card.Content>
         <Card.Footer>
           <Card.Footer.Item>
-            Published: {post.frontmatter.date.toLocaleString("ja-JP")}
+            Published: {post.frontmatter.date}
           </Card.Footer.Item>
         </Card.Footer>
       </Card>

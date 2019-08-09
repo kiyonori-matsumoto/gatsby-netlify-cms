@@ -32,8 +32,8 @@ module.exports = {
                 feed_url: "https://pine-script.netlify.com/feed.xml"
               };
             },
-            serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.edges.map(edge => {
+            serialize: ({ query: { site, allMdx } }) => {
+              return allMdx.edges.map(edge => {
                 const articleUrl = `${site.siteMetadata.siteUrl}${edge.node.fields.slug}`;
 
                 return {
