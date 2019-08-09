@@ -8,11 +8,11 @@ import { Heading } from "rbx";
 
 class TagRoute extends React.Component<any> {
   render() {
-    const { allMarkdownRemark } = this.props.data;
+    const { allMdx } = this.props.data;
 
-    const posts = allMarkdownRemark.edges;
+    const posts = allMdx.edges;
     const tag = this.props.pageContext.tag;
-    const totalCount = allMarkdownRemark.totalCount;
+    const totalCount = allMdx.totalCount;
 
     return (
       <Layout title={`"${tag}" 検索結果`}>
@@ -39,7 +39,7 @@ export default TagRoute;
 
 export const tagPageQuery = graphql`
   query TagPage($tag: String) {
-    allMarkdownRemark(
+    allMdx(
       limit: 1000
       sort: { fields: [frontmatter___date], order: DESC }
       filter: { frontmatter: { tags: { in: [$tag] } } }

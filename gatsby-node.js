@@ -6,10 +6,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
   const result = await graphql(`
     {
-      allMarkdownRemark(
-        sort: { order: ASC, fields: [frontmatter___date] }
-        filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
-      ) {
+      allMdx(sort: { order: ASC, fields: [frontmatter___date] }) {
         edges {
           previous {
             id
@@ -39,17 +36,19 @@ exports.createPages = async ({ actions, graphql }) => {
     return Promise.reject(result.errors);
   }
 
-  const posts = result.data.allMarkdownRemark.edges;
+  const posts = result.data.allMdx.edges;
 
   posts.forEach(edge => {
     const { node, previous, next } = edge;
     const id = node.id;
+    console.log(JSON.stringify(edge));
 
     createPage({
       path: node.fields.slug,
       tags: node.frontmatter.tags,
       component: path.resolve(
-        `src/templates/${String(node.frontmatter.templateKey)}.tsx`
+        // `src/templates/${String(node.frontmatter.templateKey)}.tsx`
+        "./src/templates/blog-post.tsx"
       ),
       // additional data can be passed via context
       context: {
@@ -108,12 +107,25 @@ exports.createPages = async ({ actions, graphql }) => {
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
 
-  if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode });
+  // if (node.internal.type === `MarkdownRemark`) {
+  //   const value = createFilePath({ node, getNode });
+  //   createNodeField({
+  //     name: `slug`,
+  //     node,
+  //     value
+  //   });
+  // }
+  if (node.internal.type === "Mdx") {
+    const value = createFilePath({ node, getNode, basePath: "articles/" });
     createNodeField({
-      name: `slug`,
+      // Name of the field you are adding
+      name: "slug",
+      // Individual MDX node
       node,
-      value
+      // Generated value based on filepath with "blog" prefix. We
+      // don't need a separating "/" before the value because
+      // createFilePath returns a path with the leading "/".
+      value: `/blog${value}`
     });
   }
 };

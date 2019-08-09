@@ -1,0 +1,29 @@
+---
+templateKey: blog-post
+title: 移動平均
+date: 2019-08-09T22:59:17+09:00
+description: 移動平均を表示する
+tags:
+  - TradingView
+  - indicator
+image: initial.png
+---
+
+Pine スクリプトの Helloworld として移動平均線を表示する pine スクリプトを作成したいと思います。
+
+## チャートを表示する
+
+[この](https://jp.tradingview.com/chart/)リンクを開いてチャートを表示します。
+
+![画像](./initial.png "チャート画像")
+
+## pine スクリプトを入力する
+
+次の Pine スクリプトをコピーしてエディタ上に貼り付け、`チャートに追加`ボタンを押します
+
+```pine
+//@version=4
+study("moving average")
+
+plot(sma(close, 5))
+```

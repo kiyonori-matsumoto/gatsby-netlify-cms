@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "gatsby";
-import { Column, Card } from "rbx";
+import { Column, Card, Title, Button } from "rbx";
+import Img from "gatsby-image";
 
 export interface Post {
   id: string;
@@ -13,6 +14,7 @@ export interface Post {
     description: string;
     body: string;
     tags: string[];
+    image: any;
   };
 }
 
@@ -27,31 +29,43 @@ const PostItem: React.FC<Props> = ({ post }) => {
         {/* <div className="card-image">
         <img src="{{ post.image }}" alt="{{ post.title }}">
     </div> */}
-        <Card.Header>
-          <Card.Header.Title
-            as={Link}
-            className="card-header-title"
-            to={post.fields.slug}
-          >
-            {post.frontmatter.title}
-          </Card.Header.Title>
-        </Card.Header>
-        {/* {% endif %} */}
+        {post.frontmatter.image ? (
+          <Card.Image>
+            <Img sizes={post.frontmatter.image.childImageSharp.sizes} />
+          </Card.Image>
+        ) : (
+          <Card.Header>
+            <Card.Header.Title
+              as={Link}
+              className="card-header-title"
+              to={post.fields.slug}
+            >
+              {post.frontmatter.title}
+            </Card.Header.Title>
+          </Card.Header>
+        )}
         <Card.Content>
           <div className="content">
+            {post.frontmatter.image && (
+              <Title as={Link} size={4} to={post.fields.slug}>
+                {post.frontmatter.title}
+              </Title>
+            )}
             {/* {% if post.image %}
             <a className="title is-4" href="{{ site.baseurl }}{{ post.url }}">{{ post.title}}</a>
             {% endif %} */}
             <p>{post.frontmatter.description}</p>
           </div>
           <div className="has-text-centered">
-            <Link to={post.fields.slug} className="button is-primary">
+            <Button color="primary" as={Link} to={post.fields.slug}>
               Read more
-            </Link>
+            </Button>
           </div>
         </Card.Content>
         <Card.Footer>
-          <Card.Footer.Item>Published: </Card.Footer.Item>
+          <Card.Footer.Item>
+            Published: {post.frontmatter.date.toLocaleString("ja-JP")}
+          </Card.Footer.Item>
         </Card.Footer>
       </Card>
     </Column>

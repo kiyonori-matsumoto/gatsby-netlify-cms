@@ -8,6 +8,7 @@ import GatsbyLink from "gatsby-link";
 import { Section, Container, Tag, Column, Generic } from "rbx";
 import { kebabCase } from "lodash";
 import LatestPosts from "../components/LatestPosts";
+import { MDXRenderer, MDXProvider } from "gatsby-plugin-mdx";
 
 interface Props {
   date?: string;
@@ -56,7 +57,7 @@ export const BlogPostTemplate: React.FC<Props> = ({
 
 interface Post {
   id: string;
-  html: string;
+  body: any;
   fields: {
     slug: string;
   };
@@ -66,10 +67,11 @@ interface Post {
 }
 
 const BlogPost: React.FC<{
-  data: { markdownRemark: Post; previous: Post | null; next: Post | null };
+  data: { mdx: Post; previous: Post | null; next: Post | null };
+  pageContext: any;
 }> = ({ data, pageContext }) => {
-  const { markdownRemark: post, previous, next } = data;
-  const url = `https://ahnheejong.name${post.fields.slug}`;
+  const { mdx: post, previous, next } = data;
+  const url = `https://blog.matsukiyo.me${post.fields.slug}`;
   const { latestPosts = [] } = pageContext || {};
 
   return (
@@ -80,11 +82,13 @@ const BlogPost: React.FC<{
         url={url}
       />
       <Column.Group multiline>
-        <Column>
+        <Column desktop={{ size: 8 }} tablet={{ size: 12 }}>
           <BlogPostTemplate
             date={post.frontmatter.date}
-            content={post.html}
-            contentComponent={HTMLContent}
+            content={post.body}
+            contentComponent={({ content }) => (
+              <MDXRenderer>{content}</MDXRenderer>
+            )}
             description={post.frontmatter.description}
             tags={post.frontmatter.tags}
             title={post.frontmatter.title}
@@ -125,9 +129,9 @@ export const pageQuery = graphql`
     $nextId: String
     $hasNext: Boolean!
   ) {
-    markdownRemark(id: { eq: $id }) {
+    mdx(id: { eq: $id }) {
       id
-      html
+      body
       fields {
         slug
       }
@@ -139,8 +143,7 @@ export const pageQuery = graphql`
       }
     }
 
-    previous: markdownRemark(id: { eq: $previousId })
-      @include(if: $hasPrevious) {
+    previous: mdx(id: { eq: $previousId }) @include(if: $hasPrevious) {
       fields {
         slug
       }
@@ -149,7 +152,7 @@ export const pageQuery = graphql`
       }
     }
 
-    next: markdownRemark(id: { eq: $nextId }) @include(if: $hasNext) {
+    next: mdx(id: { eq: $nextId }) @include(if: $hasNext) {
       fields {
         slug
       }

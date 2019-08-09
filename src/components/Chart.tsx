@@ -1,34 +1,14 @@
-import React, { useEffect } from "react";
-import { any } from "prop-types";
+import React from "react";
+import TradingViewWidget from "react-tradingview-widget";
+import { Image } from "rbx";
 
-declare interface window {
-  TradingView: any;
-}
-
-const Chart = () => {
-  useEffect(() => {
-    new TradingView.widget({
-      width: 980,
-      height: 610,
-      symbol: "NASDAQ:AAPL",
-      interval: "D",
-      timezone: "Etc/UTC",
-      theme: "Light",
-      style: "1",
-      locale: "ja",
-      toolbar_bg: "#f1f3f6",
-      enable_publishing: false,
-      allow_symbol_change: true,
-      studies: ["RSI@tv-basicstudies"],
-      container_id: "tradingview_f7d73"
-    });
-  }, []);
-  return (
-    <>
-      <div id="tradingview_f7d73" />
-    </>
-  );
-};
+const Chart = (props: any) => (
+  <Image.Container size="16by9">
+    <div className="has-ratio">
+      <TradingViewWidget {...props} autosize />
+    </div>
+  </Image.Container>
+);
 
 export default Chart;
 

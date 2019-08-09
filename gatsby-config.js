@@ -22,34 +22,30 @@ module.exports = {
             }
           }
         `,
-        feeds: [{
-          setup: locals => {
-            return {
-              ...locals,
-              ...locals.query.site.siteMetadata,
-              site_url: "https://blog.matsukiyo.me/",
-              feed_url: "https://blog.matsukiyo.me/feed.xml"
-            };
-          },
-          serialize: ({
-            query: {
-              site,
-              allMarkdownRemark
-            }
-          }) => {
-            return allMarkdownRemark.edges.map(edge => {
-              const articleUrl = `${site.siteMetadata.siteUrl}${edge.node.fields.slug}`;
-
+        feeds: [
+          {
+            setup: locals => {
               return {
-                ...edge.node.frontmatter,
-                url: articleUrl,
-                guid: articleUrl
+                ...locals,
+                ...locals.query.site.siteMetadata,
+                site_url: "https://blog.matsukiyo.me/",
+                feed_url: "https://blog.matsukiyo.me/feed.xml"
               };
-            });
-          },
-          query: `
+            },
+            serialize: ({ query: { site, allMarkdownRemark } }) => {
+              return allMarkdownRemark.edges.map(edge => {
+                const articleUrl = `${site.siteMetadata.siteUrl}${edge.node.fields.slug}`;
+
+                return {
+                  ...edge.node.frontmatter,
+                  url: articleUrl,
+                  guid: articleUrl
+                };
+              });
+            },
+            query: `
               {
-                allMarkdownRemark(
+                allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] },
                 ) {
                   edges {
@@ -66,8 +62,9 @@ module.exports = {
                 }
               }
             `,
-          output: "/feed.xml"
-        }]
+            output: "/feed.xml"
+          }
+        ]
       }
     },
     {
@@ -81,30 +78,37 @@ module.exports = {
         name: "pages"
       }
     },
+    // {
+    //   resolve: "gatsby-transformer-remark",
+    //   options: {
+    //     plugins: [{
+    //       resolve: "gatsby-remark-prismjs"
+    //     }]
+    //   }
+    // },
     {
-      resolve: "gatsby-transformer-remark",
+      resolve: `gatsby-plugin-mdx`,
       options: {
-        plugins: [{
-          resolve: "gatsby-remark-prismjs"
-        }]
+        extensions: [`.mdx`, `.md`],
+        // defaultLayouts: {
+        //   pages: require.resolve("./src/templates/blog-post2.tsx"),
+        //   defalut: require.resolve("./src/templates/blog-post2.tsx")
+        // },
+        gatsbyRemarkPlugins: [
+          { resolve: `gatsby-remark-prismjs` },
+          { resolve: `gatsby-remark-images` }
+        ],
+        plugins: [`gatsby-remark-images`]
       }
     },
-    `gatsby-plugin-mdx`,
-    // {
-    //   resolve: "gatsby-source-filesystem",
-    //   options: {
-    //     path: `${__dirname}/src/img`,
-    //     name: "images"
-    //   }
-    // },
-    // {
-    //   resolve: `gatsby-plugin-google-analytics`,
-    //   options: {
-    //     trackingId: "UA-102906433-1",
-    //     respectDNT: true,
-    //     exclude: ["/public/**", "/admin/**"]
-    //   }
-    // },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "UA-80739523-5",
+        respectDNT: true,
+        exclude: ["/public/**", "/admin/**"]
+      }
+    },
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     {

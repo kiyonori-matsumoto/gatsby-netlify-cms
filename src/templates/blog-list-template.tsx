@@ -9,7 +9,7 @@ import { Column } from "rbx";
 
 interface Props {
   data: {
-    allMarkdownRemark: {
+    allMdx: {
       edges: Array<{
         node: Post;
       }>;
@@ -33,7 +33,7 @@ const url = (page: number) => (page === 1 ? "/" : `/blogs/${page}`);
 export default class IndexPage extends React.Component<Props> {
   render() {
     const { data, pageContext } = this.props;
-    const { edges: posts, pageInfo } = data.allMarkdownRemark;
+    const { edges: posts, pageInfo } = data.allMdx;
     const { currentPage: current, pageCount } = pageInfo;
     const { latestPosts = [] } = pageContext || {};
 
@@ -65,7 +65,7 @@ export default class IndexPage extends React.Component<Props> {
 
 export const pageQuery = graphql`
   query BlogListQuery($skip: Int!, $limit: Int!) {
-    allMarkdownRemark(
+    allMdx(
       sort: { order: DESC, fields: [frontmatter___date] }
       filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
       limit: $limit
@@ -80,9 +80,27 @@ export const pageQuery = graphql`
           frontmatter {
             title
             templateKey
-            date(formatString: "MMMM DD, YYYY")
+            date(formatString: "YYYY年MM月DD日")
             description
             tags
+            image {
+              childImageSharp {
+                sizes(maxWidth: 640) {
+                  aspectRatio
+                  base64
+                  originalImg
+                  presentationHeight
+                  originalName
+                  presentationWidth
+                  sizes
+                  src
+                  srcSet
+                  srcSetWebp
+                  srcWebp
+                  tracedSVG
+                }
+              }
+            }
           }
         }
       }
