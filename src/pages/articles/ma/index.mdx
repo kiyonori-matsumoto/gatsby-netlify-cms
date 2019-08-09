@@ -2,11 +2,11 @@
 templateKey: blog-post
 title: 移動平均
 date: 2019-08-09T22:59:17+09:00
-description: 移動平均を表示する
+description: Pine スクリプトの Helloworld として移動平均線を表示する pine スクリプトを作成したいと思います。
 tags:
   - TradingView
   - indicator
-image: initial.png
+image: ma_ribbon.png
 ---
 
 Pine スクリプトの Helloworld として移動平均線を表示する pine スクリプトを作成したいと思います。
@@ -21,9 +21,54 @@ Pine スクリプトの Helloworld として移動平均線を表示する pine 
 
 次の Pine スクリプトをコピーしてエディタ上に貼り付け、`チャートに追加`ボタンを押します
 
-```pine
+```c++
 //@version=4
 study("moving average")
 
 plot(sma(close, 5))
+```
+
+すると次のような画面が表示されインジケータが出力されます。
+
+![](./indicator1.png "移動平均")
+
+このままだと、価格のロウソクバーと移動平均とが違う画面にプロットされてしまい、非常に見にくいです。
+
+なので、同じ画面にプロットされるように記述を一部変更したいと思います。
+
+```c++
+//@version=4
+study("moving average", overlay=true)
+
+plot(sma(close, 5))
+```
+
+study 関数の引数`overlay`に`true`を入れると、デフォルトでロウソクバーと同じ画面内に各種プロットが表示されます。
+
+![](./indicator2.png "移動平均を同じ画面に")
+
+## MA Ribbon の作成
+
+最後に、MA Ribbon と呼ばれるインジケータを作成してみます。
+
+移動平均リボンについてはこちらのサイトをご参考ください。（英語ですがいずれ日本語化できれば…）
+
+> https://www.investopedia.com/terms/m/movingaverageribbon.asp
+
+![](./ma_ribbon.png "MA Ribbon")
+
+```c++
+//@version=4
+study("MA Ribbon", overlay=true)
+
+plot(sma(close, 5))
+plot(sma(close, 10))
+plot(sma(close, 15))
+plot(sma(close, 20))
+plot(sma(close, 25))
+plot(sma(close, 30))
+plot(sma(close, 35))
+plot(sma(close, 40))
+plot(sma(close, 45))
+plot(sma(close, 50))
 ```

@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: "blog",
     description: "blog",
-    siteUrl: "https://blog.matsukiyo.me"
+    siteUrl: "https://pine-script.netlify.com"
   },
   plugins: [
     "gatsby-plugin-react-helmet",
@@ -28,8 +28,8 @@ module.exports = {
               return {
                 ...locals,
                 ...locals.query.site.siteMetadata,
-                site_url: "https://blog.matsukiyo.me/",
-                feed_url: "https://blog.matsukiyo.me/feed.xml"
+                site_url: "https://pine-script.netlify.com/",
+                feed_url: "https://pine-script.netlify.com/feed.xml"
               };
             },
             serialize: ({ query: { site, allMarkdownRemark } }) => {
