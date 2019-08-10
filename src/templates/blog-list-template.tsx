@@ -43,7 +43,7 @@ export default class IndexPage extends React.Component<Props> {
     const { title, siteUrl } = data.site.siteMetadata;
 
     return (
-      <Layout title="Blogs">
+      <Layout title="記事一覧">
         <PageHelmet title={title} description="blog" url={siteUrl} />
         <Column.Group multiline>
           <Column>

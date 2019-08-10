@@ -5,8 +5,8 @@ import { Title, Column } from "rbx";
 const _LatestPosts: React.FC<{ posts: Post[] }> = ({ posts }) => {
   return (
     <>
-      <Title as={"p"} size={4}>
-        Latest Posts
+      <Title as="h4" size={5}>
+        最新の投稿
       </Title>
 
       <Column.Group multiline>

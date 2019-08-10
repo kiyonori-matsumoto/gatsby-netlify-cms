@@ -71,11 +71,22 @@ const Renderer: React.FC<{ content: any }> = ({ content }) => (
 );
 
 const BlogPost: React.FC<{
-  data: { mdx: Post; previous: Post | null; next: Post | null };
+  data: {
+    mdx: Post;
+    previous: Post | null;
+    next: Post | null;
+    site: {
+      siteMetadata: {
+        title: string;
+        siteUrl: string;
+      };
+    };
+  };
   pageContext: any;
 }> = ({ data, pageContext }) => {
-  const { mdx: post, previous, next } = data;
-  const url = `https://blog.matsukiyo.me${post.fields.slug}`;
+  const { mdx: post, previous, next, site } = data;
+  const { title, siteUrl } = site.siteMetadata;
+  const url = `${siteUrl}${post.fields.slug}`;
   const { latestPosts = [] } = pageContext || {};
 
   return (
@@ -88,7 +99,7 @@ const BlogPost: React.FC<{
       }
     >
       <PageHelmet
-        title={post.frontmatter.title}
+        title={`${post.frontmatter.title} - ${title}`}
         description={post.frontmatter.description}
         url={url}
       />
@@ -176,6 +187,12 @@ export const pageQuery = graphql`
       }
       frontmatter {
         title
+      }
+    }
+    site {
+      siteMetadata {
+        title
+        siteUrl
       }
     }
   }
