@@ -28,7 +28,7 @@ export const BlogPostTemplate: React.FC<Props> = ({
     <>
       <div className="content">
         <Generic as="p" textSize={7}>
-          Published: {date} by Me
+          Published: {date}
         </Generic>
 
         <PostContent content={content} />

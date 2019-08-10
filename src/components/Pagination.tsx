@@ -13,7 +13,7 @@ const _Pagination: React.FC<{ current: number; pageCount: number }> = ({
       <Pagination.Step
         align="previous"
         as={Link}
-        to={current <= 1 ? undefined : url(current - 1)}
+        to={current <= 1 ? url(current) : url(current - 1)}
         disabled={current <= 1}
       >
         前へ
@@ -21,7 +21,7 @@ const _Pagination: React.FC<{ current: number; pageCount: number }> = ({
       <Pagination.Step
         align="next"
         as={Link}
-        to={current >= pageCount ? undefined : url(current + 1)}
+        to={current >= pageCount ? url(current) : url(current + 1)}
         disabled={current >= pageCount}
       >
         次へ

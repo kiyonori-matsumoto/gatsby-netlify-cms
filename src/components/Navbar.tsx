@@ -3,23 +3,26 @@ import { Link } from "gatsby";
 import { Navbar as N, Container } from "rbx";
 
 const Navbar = () => (
-  <Container>
-    <N>
-      <N.Brand>
-        <N.Item
-          as={Link}
-          to="/"
-          style={{ fontWeight: "bold" }}
-          activeClassName="nav-active"
-        >
-          Pine script Info
-        </N.Item>
-      </N.Brand>
-      <N.Item as={Link} to="/about" activeClassName="nav-active">
-        about
+  <N color="dark" sticky>
+    <N.Brand>
+      <N.Item
+        as={Link}
+        to="/"
+        style={{ fontWeight: "bold" }}
+        activeClassName="nav-active"
+      >
+        Pine script Info
       </N.Item>
-    </N>
-  </Container>
+      <N.Burger />
+    </N.Brand>
+    <N.Menu>
+      <N.Segment align="start">
+        <N.Item as={Link} to="/about" activeClassName="is-active">
+          about
+        </N.Item>
+      </N.Segment>
+    </N.Menu>
+  </N>
 );
 
 export default Navbar;
