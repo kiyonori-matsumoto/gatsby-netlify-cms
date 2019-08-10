@@ -10,3 +10,21 @@ $tabs-link-active-color: $primary;
 $tabs-link-active-border-bottom-color: $primary;
 
 @import "~bulma";
+code[class*="language-"] .tag,
+code[class*="language-"] .content,
+code[class*="language-"] .number {
+  align-items: stretch;
+  background-color: transparent;
+  border-radius: 0;
+  display: inline;
+  font-size: 1em;
+  height: auto;
+  justify-content: flex-start;
+  line-height: normal;
+  padding: 0;
+  white-space: pre;
+  margin-right: 0;
+  min-width: auto;
+  text-align: left;
+  vertical-align: baseline;
+}

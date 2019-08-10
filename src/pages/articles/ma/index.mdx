@@ -1,11 +1,12 @@
 ---
 templateKey: blog-post
-title: 移動平均
+title: 移動平均線を表示する
 date: 2019-08-09T22:59:17+09:00
 description: Pine スクリプトの Helloworld として移動平均線を表示する pine スクリプトを作成したいと思います。
 tags:
   - TradingView
   - indicator
+  - チュートリアル:初級
 image: ma_ribbon.png
 ---
 
@@ -21,7 +22,7 @@ Pine スクリプトの Helloworld として移動平均線を表示する pine 
 
 次の Pine スクリプトをコピーしてエディタ上に貼り付け、`チャートに追加`ボタンを押します
 
-```c++
+```cpp
 //@version=4
 study("moving average")
 
@@ -36,7 +37,7 @@ plot(sma(close, 5))
 
 なので、同じ画面にプロットされるように記述を一部変更したいと思います。
 
-```c++
+```cpp
 //@version=4
 study("moving average", overlay=true)
 
@@ -57,7 +58,7 @@ study 関数の引数`overlay`に`true`を入れると、デフォルトでロ�
 
 ![](./ma_ribbon.png "MA Ribbon")
 
-```c++
+```cpp
 //@version=4
 study("MA Ribbon", overlay=true)
 

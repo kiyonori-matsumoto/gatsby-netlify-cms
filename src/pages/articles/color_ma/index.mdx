@@ -1,0 +1,80 @@
+---
+templateKey: blog-post
+title: チャートに表示する情報を追加する
+date: 2019-08-10T12:41:55+09:00
+description: MA Ribbonに機能を追加する
+tags:
+  - TradingView
+  - indicator
+  - チュートリアル:初級
+image: sma-ema.png
+---
+
+引き続き、MA Ribbon に機能を追加して、より使いやすいインジケータを作成してみたいと思います。
+
+<!-- toc -->
+
+## 色を追加する
+
+色を変更するためには`plot`の`color`を使います。
+
+```js
+//@version=4
+study("MA Ribbon", overlay=true)
+
+plot(sma(close, 5), color=#ff0000)
+plot(sma(close, 10), color=#ff0033)
+plot(sma(close, 15), color=#ff0066)
+plot(sma(close, 20), color=#ff0099)
+plot(sma(close, 25), color=#ff00cc)
+plot(sma(close, 30), color=#ff00ff)
+plot(sma(close, 35), color=#cc00ff)
+plot(sma(close, 40), color=#9900ff)
+plot(sma(close, 45), color=#6600ff)
+plot(sma(close, 50), color=#3300ff)
+```
+
+![](./sma-color.png "チャートにグラデーションを付与")
+
+きれいなグラフになってきました。
+
+## 平均の計算方法を変更する
+
+[EMA](https://www.moneypartners.co.jp/support/tech/ema.html)と SMA とで切り替えられる仕組みを作りたいと思います。
+
+使う関数は[`input`](https://jp.tradingview.com/pine-script-reference/#fun_input)関数です。
+
+```js
+//@version=4
+study("MA Ribbon", overlay=true)
+
+ma_type = input(title="ma", defval="SMA", options=["SMA","EMA"])
+
+ma_fn(src, period) =>
+  ma_type == "SMA" ? sma(src, period) : ema(src, period)
+
+plot(ma_fn(close, 5), color=#ff0000)
+plot(ma_fn(close, 10), color=#ff0033)
+plot(ma_fn(close, 15), color=#ff0066)
+plot(ma_fn(close, 20), color=#ff0099)
+plot(ma_fn(close, 25), color=#ff00cc)
+plot(ma_fn(close, 30), color=#ff00ff)
+plot(ma_fn(close, 35), color=#cc00ff)
+plot(ma_fn(close, 40), color=#9900ff)
+plot(ma_fn(close, 45), color=#6600ff)
+plot(ma_fn(close, 50), color=#3300ff)
+```
+
+![](./sma-ema.png "ema")
+
+`input`関数を用いることで、平滑化関数の切り替えも設定画面から簡単にできるようになります。
+
+![](./setting.png "切り替え画面")
+
+### まとめ
+
+1. `input`の中身はわかりやすく
+
+1. 平滑化関数を定義してそれを利用する
+
+> pine スクリプトでは関数は第 1 級オブジェクトではなさそうです

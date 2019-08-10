@@ -96,7 +96,20 @@ module.exports = {
         // },
         gatsbyRemarkPlugins: [
           { resolve: `gatsby-remark-prismjs` },
-          { resolve: `gatsby-remark-images` }
+          { resolve: `gatsby-remark-images` },
+          {
+            resolve: "gatsby-remark-series",
+            render: {
+              placeholder: "toc"
+            }
+          },
+          {
+            resolve: "gatsby-remark-external-links",
+            options: {
+              target: "_blank",
+              rel: "nofollow"
+            }
+          }
         ],
         plugins: [`gatsby-remark-images`]
       }

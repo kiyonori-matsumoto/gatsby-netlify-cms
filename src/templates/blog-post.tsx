@@ -41,12 +41,7 @@ export const BlogPostTemplate: React.FC<Props> = ({
       <div className="tags">
         tags:
         {tags.map(tag => (
-          <Tag
-            color="primary"
-            key={tag}
-            as={Link}
-            to={`/tags/${kebabCase(tag)}/`}
-          >
+          <Tag color="primary" key={tag} as={Link} to={`/tags/${tag}/`}>
             {tag}
           </Tag>
         ))}
@@ -75,7 +70,14 @@ const BlogPost: React.FC<{
   const { latestPosts = [] } = pageContext || {};
 
   return (
-    <Layout title={post.frontmatter.title}>
+    <Layout
+      title={post.frontmatter.title}
+      image={
+        post.frontmatter.image
+          ? post.frontmatter.image.childImageSharp.sizes
+          : undefined
+      }
+    >
       <PageHelmet
         title={post.frontmatter.title}
         description={post.frontmatter.description}
@@ -140,6 +142,24 @@ export const pageQuery = graphql`
         title
         description
         tags
+        image {
+          childImageSharp {
+            sizes(maxWidth: 640) {
+              aspectRatio
+              base64
+              originalImg
+              presentationHeight
+              originalName
+              presentationWidth
+              sizes
+              src
+              srcSet
+              srcSetWebp
+              srcWebp
+              tracedSVG
+            }
+          }
+        }
       }
     }
 
