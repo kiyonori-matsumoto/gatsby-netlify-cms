@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "gatsby";
-import { Column, Card, Title, Button } from "rbx";
+import { Column, Card, Title, Button, Content, Generic } from "rbx";
 import Img from "gatsby-image";
 
 export interface Post {
@@ -20,11 +20,12 @@ export interface Post {
 
 interface Props {
   post: Post;
+  size?: number;
 }
 
-const PostItem: React.FC<Props> = ({ post }) => {
+const PostItem: React.FC<Props> = ({ post, size = 12 }) => {
   return (
-    <Column size={12}>
+    <Column size={size}>
       <Card key={post.id}>
         {/* <div className="card-image">
         <img src="{{ post.image }}" alt="{{ post.title }}">
@@ -45,26 +46,26 @@ const PostItem: React.FC<Props> = ({ post }) => {
           </Card.Header>
         )}
         <Card.Content>
-          <div className="content">
+          <Content>
             {post.frontmatter.image && (
               <Title as={Link} size={4} to={post.fields.slug}>
                 {post.frontmatter.title}
               </Title>
             )}
-            {/* {% if post.image %}
-            <a className="title is-4" href="{{ site.baseurl }}{{ post.url }}">{{ post.title}}</a>
-            {% endif %} */}
             <p>{post.frontmatter.description}</p>
-          </div>
-          <div className="has-text-centered">
+          </Content>
+          <Generic as="p" textSize={6} textColor="grey-dark" pull="right">
+            Published: {post.frontmatter.date}
+          </Generic>
+          {/* <div className="has-text-centered">
             <Button color="primary" as={Link} to={post.fields.slug}>
               Read more
             </Button>
-          </div>
+          </div> */}
         </Card.Content>
         <Card.Footer>
-          <Card.Footer.Item>
-            Published: {post.frontmatter.date}
+          <Card.Footer.Item as={Link} to={post.fields.slug}>
+            Read more
           </Card.Footer.Item>
         </Card.Footer>
       </Card>

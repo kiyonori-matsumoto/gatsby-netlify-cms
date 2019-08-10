@@ -1,14 +1,12 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
-import Content, { HTMLContent } from "../components/Content";
-import styled from "styled-components";
+import Content from "../components/Content";
 import PageHelmet from "../components/PageHelmet";
 import GatsbyLink from "gatsby-link";
-import { Section, Container, Tag, Column, Generic } from "rbx";
-import { kebabCase } from "lodash";
+import { Tag, Column, Generic, Level, Heading, Box } from "rbx";
 import LatestPosts from "../components/LatestPosts";
-import { MDXRenderer, MDXProvider } from "gatsby-plugin-mdx";
+import { MDXRenderer } from "gatsby-plugin-mdx";
 
 interface Props {
   date?: string;
@@ -22,10 +20,8 @@ interface Props {
 export const BlogPostTemplate: React.FC<Props> = ({
   content,
   contentComponent,
-  description,
   tags,
-  date,
-  title
+  date
 }) => {
   const PostContent = contentComponent || Content;
   return (
@@ -61,6 +57,19 @@ interface Post {
   };
 }
 
+const NextPrev: React.FC<{ post: Post }> = ({ post, children }) => (
+  <Box>
+    <GatsbyLink to={post.fields.slug}>
+      <Heading>{children}</Heading>
+      <p>{post.frontmatter.title}</p>
+    </GatsbyLink>
+  </Box>
+);
+
+const Renderer: React.FC<{ content: any }> = ({ content }) => (
+  <MDXRenderer>{content}</MDXRenderer>
+);
+
 const BlogPost: React.FC<{
   data: { mdx: Post; previous: Post | null; next: Post | null };
   pageContext: any;
@@ -88,30 +97,19 @@ const BlogPost: React.FC<{
           <BlogPostTemplate
             date={post.frontmatter.date}
             content={post.body}
-            contentComponent={({ content }) => (
-              <MDXRenderer>{content}</MDXRenderer>
-            )}
+            contentComponent={Renderer}
             description={post.frontmatter.description}
             tags={post.frontmatter.tags}
             title={post.frontmatter.title}
           />
-          <AdjacentArticles>
-            {[previous, next].map((adjacentArticle, i) =>
-              adjacentArticle != null ? (
-                <AdjacentArticle
-                  key={adjacentArticle.fields.slug}
-                  to={adjacentArticle.fields.slug}
-                >
-                  <AdjacentArticleLabel>
-                    {i === 0 ? "前へ" : "次へ"}
-                  </AdjacentArticleLabel>
-                  <AdjacentArticleTitle>
-                    {adjacentArticle.frontmatter.title}
-                  </AdjacentArticleTitle>
-                </AdjacentArticle>
-              ) : null
-            )}
-          </AdjacentArticles>
+          <Level>
+            <Level.Item align="left">
+              {previous && <NextPrev post={previous}>previous</NextPrev>}
+            </Level.Item>
+            <Level.Item align="right">
+              {next && <NextPrev post={next}>next</NextPrev>}
+            </Level.Item>
+          </Level>
         </Column>
         <Column desktop={{ size: 4 }} tablet={{ size: 12 }}>
           <LatestPosts posts={latestPosts} />
@@ -144,7 +142,7 @@ export const pageQuery = graphql`
         tags
         image {
           childImageSharp {
-            sizes(maxWidth: 640) {
+            sizes(maxWidth: 800) {
               aspectRatio
               base64
               originalImg
@@ -182,49 +180,3 @@ export const pageQuery = graphql`
     }
   }
 `;
-
-const AdjacentArticles = styled.div`
-  display: flex;
-  margin-bottom: 40px;
-
-  @media screen and (max-width: 800px) {
-    flex-wrap: wrap;
-  }
-`;
-
-const AdjacentArticle = styled(GatsbyLink)`
-  flex: 1 1 50%;
-
-  display: flex;
-  flex-direction: column;
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid #eaebec;
-
-  text-decoration: none;
-
-  &:first-child {
-    margin-right: 8px;
-  }
-
-  &:last-child {
-    margin-left: 8px;
-    text-align: right;
-  }
-
-  &:first-child:last-child {
-    margin: 0;
-  }
-
-  @media screen and (max-width: 800px) {
-    flex-basis: 100%;
-    margin: 6px 0;
-  }
-`;
-
-const AdjacentArticleLabel = styled.div`
-  font-size: 0.825em;
-  margin-bottom: 8px;
-`;
-
-const AdjacentArticleTitle = styled.strong``;

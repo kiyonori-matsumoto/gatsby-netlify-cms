@@ -27,7 +27,7 @@ class TagRoute extends React.Component<any> {
         </p>
         <PostList>
           {posts.map(({ node: post }: any) => (
-            <PostItem key={post.id} post={post} />
+            <PostItem key={post.id} post={post} size={6} />
           ))}
         </PostList>
       </Layout>
@@ -52,10 +52,29 @@ export const tagPageQuery = graphql`
             slug
           }
           frontmatter {
-            date(formatString: "MMMM DD, YYYY")
             title
+            templateKey
+            date(formatString: "YYYY年MM月DD日")
             description
             tags
+            image {
+              childImageSharp {
+                sizes(maxWidth: 640) {
+                  aspectRatio
+                  base64
+                  originalImg
+                  presentationHeight
+                  originalName
+                  presentationWidth
+                  sizes
+                  src
+                  srcSet
+                  srcSetWebp
+                  srcWebp
+                  tracedSVG
+                }
+              }
+            }
           }
         }
       }

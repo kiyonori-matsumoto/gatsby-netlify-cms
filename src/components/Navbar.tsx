@@ -12,7 +12,7 @@ const Navbar = () => (
           style={{ fontWeight: "bold" }}
           activeClassName="nav-active"
         >
-          Blog
+          Pine script Info
         </N.Item>
       </N.Brand>
       <N.Item as={Link} to="/about" activeClassName="nav-active">

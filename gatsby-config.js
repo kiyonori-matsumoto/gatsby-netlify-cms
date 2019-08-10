@@ -1,8 +1,10 @@
+const siteUrl = "https://pine-script.netlify.com";
+
 module.exports = {
   siteMetadata: {
-    title: "blog",
+    title: "Pine script Info",
     description: "blog",
-    siteUrl: "https://pine-script.netlify.com"
+    siteUrl: siteUrl
   },
   plugins: [
     "gatsby-plugin-react-helmet",
@@ -22,28 +24,32 @@ module.exports = {
             }
           }
         `,
-        feeds: [
-          {
-            setup: locals => {
-              return {
-                ...locals,
-                ...locals.query.site.siteMetadata,
-                site_url: "https://pine-script.netlify.com/",
-                feed_url: "https://pine-script.netlify.com/feed.xml"
-              };
-            },
-            serialize: ({ query: { site, allMdx } }) => {
-              return allMdx.edges.map(edge => {
-                const articleUrl = `${site.siteMetadata.siteUrl}${edge.node.fields.slug}`;
+        feeds: [{
+          setup: locals => {
+            return {
+              ...locals,
+              ...locals.query.site.siteMetadata,
+              site_url: siteUrl,
+              feed_url: `${siteUrl}/feed.xml`
+            };
+          },
+          serialize: ({
+            query: {
+              site,
+              allMdx
+            }
+          }) => {
+            return allMdx.edges.map(edge => {
+              const articleUrl = `${site.siteMetadata.siteUrl}${edge.node.fields.slug}`;
 
-                return {
-                  ...edge.node.frontmatter,
-                  url: articleUrl,
-                  guid: articleUrl
-                };
-              });
-            },
-            query: `
+              return {
+                ...edge.node.frontmatter,
+                url: articleUrl,
+                guid: articleUrl
+              };
+            });
+          },
+          query: `
               {
                 allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] },
@@ -62,9 +68,8 @@ module.exports = {
                 }
               }
             `,
-            output: "/feed.xml"
-          }
-        ]
+          output: "/feed.xml"
+        }]
       }
     },
     {
@@ -94,9 +99,12 @@ module.exports = {
         //   pages: require.resolve("./src/templates/blog-post2.tsx"),
         //   defalut: require.resolve("./src/templates/blog-post2.tsx")
         // },
-        gatsbyRemarkPlugins: [
-          { resolve: `gatsby-remark-prismjs` },
-          { resolve: `gatsby-remark-images` },
+        gatsbyRemarkPlugins: [{
+            resolve: `gatsby-remark-prismjs`
+          },
+          {
+            resolve: `gatsby-remark-images`
+          },
           {
             resolve: "gatsby-remark-series",
             render: {

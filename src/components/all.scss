@@ -1,15 +1,50 @@
-// @import "~normalize.css";
-// @import "~open-color/open-color.scss";
 @charset "utf-8";
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 
-$family-sans-serif: "Montserrat", sans-serif;
-$primary: #188eac !default;
+$family-sans-serif: "Montserrat",
+sans-serif;
 
-$tabs-link-active-color: $primary;
-$tabs-link-active-border-bottom-color: $primary;
+$grey-darker: #333;
+$black-ter: #222;
+
+$orange: #FF7518;
+$yellow: #f4db00;
+$green: #3FB618;
+$turquoise: #00ABA9;
+$blue: #1FAEFF;
+$purple: #AA40FF;
+$red: #FF2E12;
+$grey: #dbdbdb;
+
+$primary: #2780E3 !default;
+$primary-dark: darken(#2780E3, 20);
+$warning: $orange;
+$info: $purple;
+
+$orange-invert: #fff;
+$warning-invert: $orange-invert;
+
+$body-size: 15px;
+
+$radius: 0;
+$radius-small: 0;
+$radius-large: 0;
+
+$link-hover: $primary-dark;
+$link-focus: $primary-dark;
+$link-active: $primary-dark;
+
+$button-hover-color: $grey-darker;
+$button-focus: $black-ter;
+$button-active-color: $black-ter;
+
+$bulmaswatch-import-font: true !default;
+
+$box-shadow: 0 0 0 1px $grey;
+$card-shadow: 0 0 0 1px $grey;
 
 @import "~bulma";
+
 code[class*="language-"] .tag,
 code[class*="language-"] .content,
 code[class*="language-"] .number {

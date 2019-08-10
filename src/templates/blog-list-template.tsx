@@ -34,8 +34,6 @@ interface Props {
   };
 }
 
-const url = (page: number) => (page === 1 ? "/" : `/blogs/${page}`);
-
 export default class IndexPage extends React.Component<Props> {
   render() {
     const { data, pageContext } = this.props;
