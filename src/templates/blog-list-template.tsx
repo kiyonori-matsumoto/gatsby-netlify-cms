@@ -22,6 +22,12 @@ interface Props {
         currentPage: number;
       };
     };
+    site: {
+      siteMetadata: {
+        title: string;
+        siteUrl: string;
+      };
+    };
   };
   pageContext: {
     latestPosts: Post[];
@@ -36,14 +42,11 @@ export default class IndexPage extends React.Component<Props> {
     const { edges: posts, pageInfo } = data.allMdx;
     const { currentPage: current, pageCount } = pageInfo;
     const { latestPosts = [] } = pageContext || {};
+    const { title, siteUrl } = data.site.siteMetadata;
 
     return (
       <Layout title="Blogs">
-        <PageHelmet
-          title="blog"
-          description="blog"
-          url="https://blog.matsukiyo.me/"
-        />
+        <PageHelmet title={title} description="blog" url={siteUrl} />
         <Column.Group multiline>
           <Column>
             <Pagenation current={current} pageCount={pageCount} />
@@ -107,6 +110,12 @@ export const pageQuery = graphql`
         perPage
         pageCount
         currentPage
+      }
+    }
+    site {
+      siteMetadata {
+        title
+        siteUrl
       }
     }
   }

@@ -40,7 +40,12 @@ plot(sma(close, 50), color=#3300ff)
 
 ## 平均の計算方法を変更する
 
-[EMA](https://www.moneypartners.co.jp/support/tech/ema.html)と SMA とで切り替えられる仕組みを作りたいと思います。
+[この記事](https://www.investopedia.com/terms/g/guppy-multiple-moving-average.asp)によると、
+
+> The responsiveness of the indicator can be adjusted by changing the number of time periods used in the moving averages, or by changing the type of moving average from a simple moving average (SMA) to an exponential moving average (EMA).  
+> 移動平均を求める期間を変更する、もしくは平滑化関数を SMA から EMA に変更することでインジケータの応答性を調整できます。
+
+ということなので、早速[EMA](https://www.moneypartners.co.jp/support/tech/ema.html)と SMA とで切り替えられる仕組みを作りたいと思います。
 
 使う関数は[`input`](https://jp.tradingview.com/pine-script-reference/#fun_input)関数です。
 
