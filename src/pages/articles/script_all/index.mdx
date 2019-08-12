@@ -57,11 +57,12 @@ any(conds, len) =>
         b := b or conds[i]
     b
 
-long = open < close
-short = open > close
+// 3日間連続して終値の方が高い場合はlong
+long = all(open <= close, 3)
+short = all(open >= close, 3)
 
-plotshape(all(long, 3), style=shape.triangleup)
-plotshape(all(short, 3), style=shape.triangledown, color=color.red)
+plotshape(long, style=shape.triangleup)
+plotshape(short, style=shape.triangledown, color=color.red)
 ```
 
 ![image](./all.png "Consecutive Up/Down Strategy")

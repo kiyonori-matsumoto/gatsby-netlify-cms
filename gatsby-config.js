@@ -83,14 +83,6 @@ module.exports = {
         name: "pages"
       }
     },
-    // {
-    //   resolve: "gatsby-transformer-remark",
-    //   options: {
-    //     plugins: [{
-    //       resolve: "gatsby-remark-prismjs"
-    //     }]
-    //   }
-    // },
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -109,6 +101,7 @@ module.exports = {
               // the content container as this plugin uses this as the
               // base for generating different widths of each image.
               maxWidth: 800,
+              withWebp: true,
             },
           },
           {

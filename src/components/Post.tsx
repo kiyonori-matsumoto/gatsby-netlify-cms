@@ -27,9 +27,6 @@ const PostItem: React.FC<Props> = ({ post, size = 12 }) => {
   return (
     <Column size={size}>
       <Card key={post.id}>
-        {/* <div className="card-image">
-        <img src="{{ post.image }}" alt="{{ post.title }}">
-    </div> */}
         {post.frontmatter.image ? (
           <Card.Image>
             <Img sizes={post.frontmatter.image.childImageSharp.sizes} />
@@ -57,11 +54,6 @@ const PostItem: React.FC<Props> = ({ post, size = 12 }) => {
           <Generic as="p" textSize={6} textColor="grey-dark" pull="right">
             Published: {post.frontmatter.date}
           </Generic>
-          {/* <div className="has-text-centered">
-            <Button color="primary" as={Link} to={post.fields.slug}>
-              Read more
-            </Button>
-          </div> */}
         </Card.Content>
         <Card.Footer>
           <Card.Footer.Item as={Link} to={post.fields.slug}>

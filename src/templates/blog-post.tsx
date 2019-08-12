@@ -1,12 +1,23 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
-import Content from "../components/Content";
 import PageHelmet from "../components/PageHelmet";
+import Shares from "../components/Shares";
 import GatsbyLink from "gatsby-link";
-import { Tag, Column, Generic, Level, Heading, Box } from "rbx";
+import {
+  Tag,
+  Column,
+  Generic,
+  Level,
+  Heading,
+  Box,
+  Media,
+  Image,
+  Content
+} from "rbx";
 import LatestPosts from "../components/LatestPosts";
 import { MDXRenderer } from "gatsby-plugin-mdx";
+import Img from "gatsby-image";
 
 interface Props {
   date?: string;
@@ -26,22 +37,21 @@ export const BlogPostTemplate: React.FC<Props> = ({
   const PostContent = contentComponent || Content;
   return (
     <>
-      <div className="content">
+      <Content>
         <Generic as="p" textSize={7}>
           Published: {date}
         </Generic>
-
         <PostContent content={content} />
-      </div>
+      </Content>
 
-      <div className="tags">
-        tags:
+      <Heading>Tags</Heading>
+      <Tag.Group>
         {tags.map(tag => (
           <Tag color="primary" key={tag} as={Link} to={`/tags/${tag}/`}>
             {tag}
           </Tag>
         ))}
-      </div>
+      </Tag.Group>
     </>
   );
 };
@@ -57,14 +67,28 @@ interface Post {
   };
 }
 
-const NextPrev: React.FC<{ post: Post }> = ({ post, children }) => (
-  <Box>
-    <GatsbyLink to={post.fields.slug}>
-      <Heading>{children}</Heading>
-      <p>{post.frontmatter.title}</p>
-    </GatsbyLink>
-  </Box>
-);
+const NextPrev: React.FC<{ post: Post }> = ({ post, children }) => {
+  const { thumbnail } = post.frontmatter;
+  return (
+    <Box>
+      <Media>
+        <Media.Item align="left">
+          {thumbnail && (
+            <Image.Container size={64}>
+              <Image as={Img} fixed={thumbnail.childImageSharp.fixed} />
+            </Image.Container>
+          )}
+        </Media.Item>
+        <Media.Item>
+          <GatsbyLink to={post.fields.slug}>
+            <Heading>{children}</Heading>
+            <p>{post.frontmatter.title}</p>
+          </GatsbyLink>
+        </Media.Item>
+      </Media>
+    </Box>
+  );
+};
 
 const Renderer: React.FC<{ content: any }> = ({ content }) => (
   <MDXRenderer>{content}</MDXRenderer>
@@ -88,6 +112,7 @@ const BlogPost: React.FC<{
   const { title, siteUrl } = site.siteMetadata;
   const url = `${siteUrl}${post.fields.slug}`;
   const { latestPosts = [] } = pageContext || {};
+  const pageTitle = `${post.frontmatter.title} - ${title}`;
 
   return (
     <Layout
@@ -99,7 +124,7 @@ const BlogPost: React.FC<{
       }
     >
       <PageHelmet
-        title={`${post.frontmatter.title} - ${title}`}
+        title={pageTitle}
         description={post.frontmatter.description}
         url={url}
       />
@@ -113,6 +138,8 @@ const BlogPost: React.FC<{
             tags={post.frontmatter.tags}
             title={post.frontmatter.title}
           />
+          <Shares url={url} title={pageTitle} />
+          <Heading>Others</Heading>
           <Level>
             <Level.Item align="left">
               {previous && <NextPrev post={previous}>previous</NextPrev>}
@@ -178,6 +205,22 @@ export const pageQuery = graphql`
       }
       frontmatter {
         title
+        thumbnail: image {
+          childImageSharp {
+            fixed(fit: COVER, width: 64, height: 64) {
+              aspectRatio
+              tracedSVG
+              width
+              srcWebp
+              srcSetWebp
+              srcSet
+              src
+              originalName
+              height
+              base64
+            }
+          }
+        }
       }
     }
 
@@ -187,6 +230,22 @@ export const pageQuery = graphql`
       }
       frontmatter {
         title
+        thumbnail: image {
+          childImageSharp {
+            fixed(fit: COVER, width: 64, height: 64) {
+              aspectRatio
+              tracedSVG
+              width
+              srcWebp
+              srcSetWebp
+              srcSet
+              src
+              originalName
+              height
+              base64
+            }
+          }
+        }
       }
     }
     site {
