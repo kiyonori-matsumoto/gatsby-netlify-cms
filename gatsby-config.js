@@ -87,11 +87,22 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: [`.mdx`, `.md`],
+
+        tableOfContents: {
+          heading: null,
+          maxDepth: 6,
+        },
         // defaultLayouts: {
         //   pages: require.resolve("./src/templates/blog-post2.tsx"),
         //   defalut: require.resolve("./src/templates/blog-post2.tsx")
         // },
         gatsbyRemarkPlugins: [{
+            resolve: 'gatsby-remark-autolink-headers',
+            options: {
+              offsetY: '20',
+              removeAccents: true,
+            }
+          }, {
             resolve: `gatsby-remark-prismjs`
           },
           {
@@ -103,12 +114,6 @@ module.exports = {
               maxWidth: 800,
               withWebp: true,
             },
-          },
-          {
-            resolve: "gatsby-remark-series",
-            render: {
-              placeholder: "toc"
-            }
           },
           {
             resolve: "gatsby-remark-external-links",

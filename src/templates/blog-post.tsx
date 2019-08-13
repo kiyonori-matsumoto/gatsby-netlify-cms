@@ -3,6 +3,7 @@ import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
 import PageHelmet from "../components/PageHelmet";
 import Shares from "../components/Shares";
+import Toc from "../components/Toc";
 import GatsbyLink from "gatsby-link";
 import {
   Tag,
@@ -59,6 +60,7 @@ export const BlogPostTemplate: React.FC<Props> = ({
 interface Post {
   id: string;
   body: any;
+  tableOfContents: any;
   fields: {
     slug: string;
   };
@@ -150,7 +152,8 @@ const BlogPost: React.FC<{
           </Level>
         </Column>
         <Column desktop={{ size: 4 }} tablet={{ size: 12 }}>
-          <LatestPosts posts={latestPosts} />
+          {/* <LatestPosts posts={latestPosts} /> */}
+          <Toc items={post.tableOfContents.items} />
         </Column>
       </Column.Group>
     </Layout>
@@ -173,6 +176,7 @@ export const pageQuery = graphql`
       fields {
         slug
       }
+      tableOfContents
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
         title

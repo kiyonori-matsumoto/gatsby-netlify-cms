@@ -71,5 +71,9 @@ code[class*="language-"] .number {
 }
 
 .content pre {
-  padding: 1.25em;
+  padding: 1.25em 0.75em;
+}
+
+.content .anchor {
+  margin-right: 1em;
 }
