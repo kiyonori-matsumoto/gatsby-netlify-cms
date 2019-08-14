@@ -6,7 +6,8 @@ description: Pine スクリプトの Helloworld として移動平均線を表�
 tags:
   - TradingView
   - indicator
-image: changed.png
+  - チュートリアル:初級
+image: input.png
 ---
 
 前回までに、input の基本的な使い方を学習しました。個々では input を更に使いこなして、カンタンにカスタマイズできる MA Ribbon チャートを作成したいと思います。
@@ -71,6 +72,17 @@ plot(ma_fn(count > 9 ? close : na, init + step * 9), color=#3300ff)
 適当にパラメータを変更して OK ボタンを押すと、パラメータで指定された形式に表示が切り替わりチャート上に MA Ribbon が表示されました。
 
 ![](./changed.png "パラメータ変更後")
+
+<!--  import Chart from "../../../components/Chart.tsx";
+
+ <Chart
+ symbol="NASDAQ:AAPL"
+ widgetType="chart"
+ chart="mH5of7i1"
+ locale="jp"
+ autosize
+ mobileStatic
+ /> -->
 
 import { Message } from "rbx";
 

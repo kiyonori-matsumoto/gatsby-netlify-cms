@@ -1,0 +1,63 @@
+---
+templateKey: reference
+title: "[Reference] input 関数"
+date: 2019-08-13T16:48:38+09:00
+description: Pine スクリプトの Helloworld として移動平均線を表示する pine スクリプトを作成したいと思います。
+tags:
+  - TradingView
+  - indicator
+image:
+---
+
+import { Column } from "rbx";
+
+## input 関数
+
+```
+input(defval, title, type, confirm) → bool
+input(defval, title, type, minval, maxval, confirm, step, options) → integer
+input(defval, title, type, minval, maxval, confirm, step, options) → float
+input(defval, title, type, confirm, options) → string
+input(defval, title, type) → series
+```
+
+### 引数
+
+#### type (const string)
+
+> 入力タイプ。 可能な値は bool、integer、float、string、symbol、resolution、session、source です。
+
+![](types.png "types")
+
+```cpp
+a = input(false, type=input.bool, title='type=bool')
+b = input(2, type=input.integer, title='type=integer')
+c = input(2.0, type=input.float, title='type=float')
+d = input('test', type=input.string, title='type=string')
+e = input('NASDAQ:AAPL', type=input.symbol, title='type=symbol')
+f = input('1d', type=input.resolution, title='type=resolution')
+g = input('24x7', type=input.session, title='type=session')
+h = input(close, type=input.source, title='type=source')
+```
+
+#### title (const string)
+
+> 入力の表題
+
+#### defval (Depends on 'type' argument)
+
+> 入力変数のデフォルト値。スクリプトによって実際に使用される入力値は、オブジェクトの書式設定ダイアログでユーザーが設定することに注意してください。
+
+#### minval (const integer, float), maxval (const integer, float)
+
+input の最小値、最大値
+
+#### step (const integer, float)
+
+> フォーマットダイアログの入力を増減する際のステップ値。デフォルト値は 1。この引数は、input の種類が input.integer と input.float の時にだけ用いられます。
+
+ダイアログ上でトグルの ± ボタンを押した際の変化量
+
+#### confirm (const bool)
+
+> true の場合、インジケーターをチャートに追加する前に、ユーザーは input 値の確認を求められます。デフォルト値は false です。この引数は、input の種類が input.source の時は利用されません。

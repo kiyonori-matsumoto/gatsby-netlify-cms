@@ -3,7 +3,7 @@ import { Link } from "gatsby";
 import { Navbar as N, Container } from "rbx";
 
 const Navbar = () => (
-  <N color="dark" fixed="top">
+  <N color="dark">
     <N.Brand>
       <N.Item
         as={Link}

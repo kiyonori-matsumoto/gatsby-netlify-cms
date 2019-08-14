@@ -1,14 +1,14 @@
 ---
 templateKey: reference
-title: "[Reference] Studyコマンド"
+title: "[Reference] Study関数"
 date: 2019-08-10T03:04:46+09:00
-description: "[Reference] studyコマンド"
+description: "[Reference] study関数"
 tags:
   - reference
   - study
 ---
 
-## Study コマンド
+## Study 関数
 
 ```
 study(title, shorttitle, overlay, format, precision, scale, max_bars_back) → void

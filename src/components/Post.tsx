@@ -1,13 +1,26 @@
 import * as React from "react";
 import { Link } from "gatsby";
-import { Column, Card, Title, Button, Content, Generic } from "rbx";
+import {
+  Column,
+  Card,
+  Title,
+  Button,
+  Content,
+  Generic,
+  Icon,
+  Level
+} from "rbx";
 import Img from "gatsby-image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
+import { LevelItem } from "rbx/components/level/level-item";
 
 export interface Post {
   id: string;
   fields: {
     slug: string;
   };
+  excerpt: string;
   frontmatter: {
     title: string;
     date: Date;
@@ -49,11 +62,17 @@ const PostItem: React.FC<Props> = ({ post, size = 12 }) => {
                 {post.frontmatter.title}
               </Title>
             )}
-            <p>{post.frontmatter.description}</p>
+            <p>{post.excerpt || post.frontmatter.description}</p>
           </Content>
-          <Generic as="p" textSize={6} textColor="grey-dark" pull="right">
-            Published: {post.frontmatter.date}
-          </Generic>
+          <Level breakpoint="mobile">
+            <Level.Item align="left" />
+            <Level.Item align="right" as="p" textSize={6} textColor="grey-dark">
+              <Icon>
+                <FontAwesomeIcon icon={faClock} />
+              </Icon>{" "}
+              {post.frontmatter.date}
+            </Level.Item>
+          </Level>
         </Card.Content>
         <Card.Footer>
           <Card.Footer.Item as={Link} to={post.fields.slug}>

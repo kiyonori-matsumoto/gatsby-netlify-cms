@@ -77,6 +77,7 @@ export const pageQuery = graphql`
           fields {
             slug
           }
+          excerpt(pruneLength: 100)
           frontmatter {
             title
             templateKey
