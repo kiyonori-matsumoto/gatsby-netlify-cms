@@ -42,7 +42,11 @@ const PostItem: React.FC<Props> = ({ post, size = 12 }) => {
       <Card key={post.id}>
         {post.frontmatter.image ? (
           <Card.Image>
-            <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
+            <Img
+              fluid={post.frontmatter.image.childImageSharp.fluid}
+              onLoad={() => console.log("onload")}
+              onStartLoad={e => console.log(`onstartload ${JSON.stringify(e)}`)}
+            />
           </Card.Image>
         ) : (
           <Card.Header>
