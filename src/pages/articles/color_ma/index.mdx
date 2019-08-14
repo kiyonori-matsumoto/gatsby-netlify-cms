@@ -53,10 +53,10 @@ plot(sma(close, 50), color=#3300ff)
 //@version=4
 study("MA Ribbon", overlay=true)
 
-ma_type = input(title="ma", defval="SMA", options=["SMA","EMA"])
+ma_type = input(title="ma", defval="SMA", options=["SMA","EMA"]) // 1
 
 ma_fn(src, period) =>
-  ma_type == "SMA" ? sma(src, period) : ema(src, period)
+  ma_type == "SMA" ? sma(src, period) : ema(src, period) // 2
 
 plot(ma_fn(close, 5), color=#ff0000)
 plot(ma_fn(close, 10), color=#ff0033)
@@ -70,17 +70,32 @@ plot(ma_fn(close, 45), color=#6600ff)
 plot(ma_fn(close, 50), color=#3300ff)
 ```
 
+ポイントは次のとおりです。
+
+1. 利用する平滑化関数を入力ダイアログから変更できるようにする。
+
+   次のように input 関数を利用することにより、ダイアログを利用して EMA か SMA かを選択できるようにします。
+
+   ```cpp
+   ma_type = input(title="ma", defval="SMA", options=["SMA","EMA"])
+   ```
+
+   input 関数を利用して定義した変数は、次のように設定画面から簡単に切り替えが行うことができるようになります。
+
+   ![](./setting.png "切り替え画面")
+
+2. 選択した値を利用して平滑化関数を切替可能にする。
+
+   ```cpp
+   ma_fn(src, period) =>
+     ma_type == "SMA" ? sma(src, period) : ema(src, period) // 2
+   ```
+
+   1.で選択した値が"SMA"であれば`sma`関数を利用し、そうでない場合は`ema`関数を利用するように利用する関数を切り替えます。
+
+以上の定義で、切り替える仕組みができました。
+
 ![](./sma-ema.png "ema")
-
-`input`関数を用いることで、平滑化関数の切り替えも設定画面から簡単にできるようになります。
-
-![](./setting.png "切り替え画面")
-
-### まとめ
-
-1. `input`の中身はわかりやすく
-
-1. 平滑化関数を定義してそれを利用する
 
 import { Message } from "rbx";
 
@@ -93,3 +108,9 @@ import { Message } from "rbx";
 
   </Message.Body>
 </Message>
+
+## まとめ
+
+1. `input`の中身はわかりやすく
+
+1. 平滑化関数を定義してそれを利用する

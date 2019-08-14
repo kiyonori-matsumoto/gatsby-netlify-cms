@@ -42,7 +42,7 @@ const PostItem: React.FC<Props> = ({ post, size = 12 }) => {
       <Card key={post.id}>
         {post.frontmatter.image ? (
           <Card.Image>
-            <Img sizes={post.frontmatter.image.childImageSharp.sizes} />
+            <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
           </Card.Image>
         ) : (
           <Card.Header>
