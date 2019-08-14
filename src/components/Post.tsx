@@ -33,7 +33,7 @@ export interface Post {
 
 interface Props {
   post: Post;
-  size?: number;
+  size?: React.ComponentProps<typeof Column>["size"];
 }
 
 const PostItem: React.FC<Props> = ({ post, size = 12 }) => {
