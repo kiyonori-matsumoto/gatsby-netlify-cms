@@ -1,12 +1,19 @@
 const path = require("path");
-const { createFilePath } = require("gatsby-source-filesystem");
+const {
+  createFilePath
+} = require("gatsby-source-filesystem");
 
-exports.createPages = async ({ actions, graphql }) => {
-  const { createPage } = actions;
+exports.createPages = async ({
+  actions,
+  graphql
+}) => {
+  const {
+    createPage
+  } = actions;
 
   const result = await graphql(`
     {
-      allMdx(sort: { order: ASC, fields: [frontmatter___date] }) {
+      allMdx(sort: { order: DESC, fields: [frontmatter___date] }) {
         edges {
           previous {
             id
@@ -39,7 +46,11 @@ exports.createPages = async ({ actions, graphql }) => {
   const posts = result.data.allMdx.edges;
 
   posts.forEach(edge => {
-    const { node, previous, next } = edge;
+    const {
+      node,
+      previous,
+      next
+    } = edge;
     const id = node.id;
     console.log(JSON.stringify(edge));
 
@@ -89,7 +100,9 @@ exports.createPages = async ({ actions, graphql }) => {
   // Make BlogList Page
   const postsPerPage = 10;
   const numPages = Math.ceil(posts.length / postsPerPage);
-  Array.from({ length: numPages }).forEach((_, i) => {
+  Array.from({
+    length: numPages
+  }).forEach((_, i) => {
     createPage({
       path: i === 0 ? "/" : `/blogs/${i + 1}`,
       component: path.resolve("./src/templates/blog-list-template.tsx"),
@@ -104,8 +117,14 @@ exports.createPages = async ({ actions, graphql }) => {
   });
 };
 
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions;
+exports.onCreateNode = ({
+  node,
+  actions,
+  getNode
+}) => {
+  const {
+    createNodeField
+  } = actions;
 
   // if (node.internal.type === `MarkdownRemark`) {
   //   const value = createFilePath({ node, getNode });
@@ -116,7 +135,11 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   //   });
   // }
   if (node.internal.type === "Mdx") {
-    const value = createFilePath({ node, getNode, basePath: "articles/" });
+    const value = createFilePath({
+      node,
+      getNode,
+      basePath: "articles/"
+    });
     createNodeField({
       // Name of the field you are adding
       name: "slug",
