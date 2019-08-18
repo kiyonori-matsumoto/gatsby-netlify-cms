@@ -36,7 +36,7 @@ image: trailing.png
 
 ```pine
 //@version=4
-strategy("マイスクリプト", (overlay = true))
+strategy("マイスクリプト", overlay = true)
 
 stop_long = input(5.0, title="stop long%", type=input.float, minval=0, step=0.2)
 stop_short = input(5.0, title="stop short%", type=input.float, minval=0, step=0.2)
