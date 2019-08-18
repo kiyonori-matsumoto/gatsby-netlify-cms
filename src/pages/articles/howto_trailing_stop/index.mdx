@@ -34,9 +34,9 @@ image: trailing.png
 
 `input`関数を利用して、トレイリングストップのストップ幅（％値）を外部から入力できるようにします。今回は、ストップ幅をパーセントで設定でき、かつ、ロングとショートと別々にストップ幅を設定できる構成としています。
 
-```js
+```pine
 //@version=4
-strategy("マイスクリプト", (overlay = true));
+strategy("マイスクリプト", (overlay = true))
 
 stop_long = input(5.0, title="stop long%", type=input.float, minval=0, step=0.2)
 stop_short = input(5.0, title="stop short%", type=input.float, minval=0, step=0.2)
@@ -48,7 +48,7 @@ stop_short = input(5.0, title="stop short%", type=input.float, minval=0, step=0.
 
 では実際に値を計算する関数を作成していきたいと思います。今回は再利用しやすいように、関数部分を別途切り出して作成していきます。
 
-```js
+```pine
 // ポジションを取っているか否かを判定する ★②
 have_position(position) =>
     position == strategy.long ? (strategy.position_size > 0) : (strategy.position_size < 0)
@@ -104,9 +104,9 @@ import { Message } from "rbx";
 
 新規にポジションを立てる場合は`strategy.entry`関数を利用します。ポジションを決済する場合は`strategy.exit`関数を利用します。
 
-また、念の為ポジションを持っていない場合を考慮して（ドテン等でexitが実行されなかった場合）、`strategy.cancel`関数を利用して決済の注文をキャンセルしています。（これを怠ると、次回ポジションを立てたと同時に決裁されてしまう可能性があるため）
+また、念の為ポジションを持っていない場合を考慮して（ドテン等で exit が実行されなかった場合）、`strategy.cancel`関数を利用して決済の注文をキャンセルしています。（これを怠ると、次回ポジションを立てたと同時に決裁されてしまう可能性があるため）
 
-```js
+```pine
 if (long_entry)
     strategy.entry('long', strategy.long)
     strategy.exit('exitlong', 'long',stop=long_stop_price)
@@ -132,7 +132,7 @@ else
 
 最後に、スクリプトの全体を再度掲載します。今回はエントリーポイントとして、10SMA と 25SMA のゴールデンクロスでエントリーするスクリプトを例に作成しました。
 
-```js
+```pine
 //@version=4
 strategy("マイスクリプト", overlay=true)
 

@@ -103,7 +103,14 @@ module.exports = {
               removeAccents: true,
             }
           }, {
-            resolve: `gatsby-remark-prismjs`
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              languageExtensions: [{
+                language: 'pine',
+                extend: 'javascript',
+                definition: {}
+              }, ]
+            }
           },
           {
             resolve: `gatsby-remark-images`,
@@ -125,6 +132,9 @@ module.exports = {
         ],
         plugins: [`gatsby-remark-images`]
       }
+    },
+    {
+      resolve: 'gatsby-plugin-sitemap',
     },
     {
       resolve: `gatsby-plugin-google-analytics`,

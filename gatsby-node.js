@@ -13,7 +13,7 @@ exports.createPages = async ({
 
   const result = await graphql(`
     {
-      allMdx(sort: { order: DESC, fields: [frontmatter___date] }) {
+      allMdx(sort: { order: ASC, fields: [frontmatter___date] }) {
         edges {
           previous {
             id
@@ -68,7 +68,7 @@ exports.createPages = async ({
         hasPrevious: previous != null,
         nextId: next != null ? next.id : null,
         hasNext: next != null,
-        latestPosts: posts.slice(0, 3).map(p => p.node)
+        latestPosts: posts.slice().reverse().slice(0, 3).map(p => p.node)
       }
     });
   });
